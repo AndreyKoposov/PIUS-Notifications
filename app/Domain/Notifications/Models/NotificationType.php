@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NotificationType extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+
+    protected $guarded = [];
+    protected $table = 'notification_types';
 }

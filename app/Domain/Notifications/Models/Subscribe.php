@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Domain\Notifications\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Subscribe extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+
+    protected $table = 'subscribes';
+    protected $guarded = [];
 }

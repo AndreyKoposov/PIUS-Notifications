@@ -17,10 +17,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->bigInt('user_id');
+            $table->bigInteger('user_id');
             $table->foreignIdFor(NotificationType::class);
-
-            $table->softDeletess();
         });
     }
 
