@@ -4,33 +4,33 @@ namespace App\Http\ApiV1\Modules\Notifications\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Domain\Notifications\Models\NotificationType;
+use App\Domain\Notifications\Models\Subscribe;
 
 
-class TypesController
+class SubscribesController
 {
     public function add(Request $request) {
-        $courseId = $request->request->get('course_id');
+        $courseId = $request->request->get('user_id');
 
-        $type = NotificationType::create([
-            'course_id' => $courseId
+        $notification = Subscribe::create([
+            'user_id' => $courseId
         ]);
 
-        return response()->json(['id' => $type->id]);
+        return response()->json(['id' => $notification->id]);
     }
 
     public function get(Request $request) {
         $id = $request->route('id');
 
-        $type = NotificationType::find($id);
+        $subscribe = Subscribe::find($id);
 
-        return response()->json(['data' => $type]);
+        return response()->json(['data' => $subscribe]);
     }
 
     public function delete(Request $request) {
         $id = $request->route('id');
 
-        NotificationType::find($id)->delete();
+        Subscribe::find($id)->delete();
 
         return response()->json(['data' => 'success']);
     }

@@ -27,4 +27,20 @@ class NotificationsController
 
         return response()->json(['id' => $notification->id]);
     }
+
+    public function get(Request $request) {
+        $id = $request->route('id');
+
+        $notification = Notification::find($id);
+
+        return response()->json(['data' => $notification]);
+    }
+
+    public function delete(Request $request) {
+        $id = $request->route('id');
+
+        $notification = Notification::find($id)->delete();
+
+        return response()->json(['data' => 'success']);
+    }
 }
