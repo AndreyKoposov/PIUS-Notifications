@@ -25,7 +25,7 @@ class NotificationsController
             'notification_type_id' => $notificationType
         ]);
 
-        return response()->json(['id' => $notification->id]);
+        return response()->json(['data' => $notification]);
     }
 
     public function get(Request $request) {
