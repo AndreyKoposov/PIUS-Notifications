@@ -30,8 +30,12 @@ class NotificationsController
 
     public function get(Request $request) {
         $id = $request->route('id');
-
         $notification = Notification::find($id);
+
+        $include = $request->input('include');
+        if($include === 'type') {
+            $notification->type;
+        }
 
         return response()->json(['data' => $notification]);
     }

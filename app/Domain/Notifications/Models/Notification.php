@@ -13,4 +13,8 @@ class Notification extends Model
 
     protected $table = 'users_notifications';
     protected $guarded = [];
+
+    public function type() {
+        return $this->belongsTo(NotificationType::class, 'notification_type_id', 'id');
+    }
 }
