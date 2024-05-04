@@ -5,6 +5,7 @@ namespace App\Http\ApiV1\Modules\Notifications\Controllers;
 use Illuminate\Http\Request;
 use App\Notifications\EmailNotification;
 use App\Domain\Notifications\Models\Notification;
+use App\Domain\Notifications\Models\NotificationType;
 
 class NotificationsController
 {
@@ -19,6 +20,13 @@ class NotificationsController
     public function add(Request $request) {
         $content = $request->request->get('content');
         $notificationType = $request->request->get('type_id');
+        $errors = [];
+
+        if(NotificationType::find($notificationType) === null)
+            $errors[] = ['code' => 1, 'message' => "type with id {$notificationType} does not exist"];
+
+        if(!empty($errors))
+            return response()->json(['data' => null, 'errors' => $errors]);
 
         $notification = Notification::create([
             'content' => $content,
