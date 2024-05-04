@@ -9,14 +9,13 @@ if (file_exists($generatedRoutes)) { // prevents your app and artisan from break
     require $generatedRoutes;
 }
 
-//Route::get('send/', [NotificationsController::class, 'send']);
-
 
 
 Route::group(['prefix' => 'notifications'], function () {
     Route::get('/{id}', [NotificationsController::class, 'get']);
     Route::post('/', [NotificationsController::class, 'add']);
     Route::delete('/{id}', [NotificationsController::class, 'delete']);
+    Route::put('/{id}', [NotificationsController::class, 'replace']);
 
     Route::get('/send/{id}', [NotificationsController::class, 'send']);
 });

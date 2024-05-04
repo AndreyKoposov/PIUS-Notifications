@@ -22,6 +22,10 @@ class NotificationsController
         $notificationType = $request->request->get('type_id');
         $errors = [];
 
+        if($notificationType === null)
+            $errors[] = ['code' => 1, 'message' => "type cannot be null"];
+        if($content === null)
+            $errors[] = ['code' => 1, 'message' => "content cannot be null"];
         if(NotificationType::find($notificationType) === null)
             $errors[] = ['code' => 1, 'message' => "type with id {$notificationType} does not exist"];
 
@@ -32,6 +36,38 @@ class NotificationsController
             'content' => $content,
             'notification_type_id' => $notificationType
         ]);
+
+        return response()->json(['data' => $notification]);
+    }
+
+    public function replace(Request $request) {
+        $id = $request->route('id');
+        $content = $request->request->get('content');
+        $notificationType = $request->request->get('type_id');
+        $sendTime = $request->request->get('send_time');
+        $userId = $request->request->get('user_id');
+        $errors = [];
+
+        $notification = Notification::find($id);
+
+        if($notificationType === null || trim($notificationType) === '')
+            $errors[] = ['code' => 1, 'message' => "type cannot be null"];
+        else
+        if(NotificationType::find($notificationType) === null)
+            $errors[] = ['code' => 1, 'message' => "type with id <{$notificationType}> does not exist"];
+        if($content === null)
+            $errors[] = ['code' => 1, 'message' => "content cannot be null"];
+        if(Notification::find($id) === null)
+            $errors[] = ['code' => 1, 'message' => "notification with id {$id} does not exist"];
+
+        if(!empty($errors))
+            return response()->json(['data' => null, 'errors' => $errors]);
+
+        $notification->content = $content;
+        $notification->notification_type_id = $notificationType;
+        $notification->user_id = $userId;
+        $notification->send_time = $sendTime;
+        $notification->save();
 
         return response()->json(['data' => $notification]);
     }
