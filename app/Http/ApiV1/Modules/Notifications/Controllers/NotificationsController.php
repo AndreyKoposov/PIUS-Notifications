@@ -22,13 +22,13 @@ class NotificationsController
         $notificationType = $request->request->get('type_id');
         $errors = [];
 
-        if($notificationType === null or !is_numeric($notificationTyp))
-            $errors[] = ['code' => 1, 'message' => "type cannot be null"];
+        if($notificationType === null or !is_numeric($notificationType))
+            $errors[] = ['code' => "400", 'message' => "type cannot be null"];
         else
         if(NotificationType::find($notificationType) === null)
-            $errors[] = ['code' => 1, 'message' => "type with id {$notificationType} does not exist"];
+            $errors[] = ['code' => "404", 'message' => "type with id {$notificationType} does not exist"];
         if($content === null)
-            $errors[] = ['code' => 1, 'message' => "content cannot be null"];
+            $errors[] = ['code' => "400", 'message' => "content cannot be null"];
 
         if(!empty($errors))
             return response()->json(['data' => null, 'errors' => $errors]);
@@ -52,14 +52,14 @@ class NotificationsController
         $notification = Notification::find($id);
 
         if($notificationType === null || !is_numeric($notificationType))
-            $errors[] = ['code' => 1, 'message' => "type cannot be null or empty"];
+            $errors[] = ['code' => "400", 'message' => "type cannot be null or empty"];
         else
         if(NotificationType::find($notificationType) === null)
-            $errors[] = ['code' => 1, 'message' => "type with id <{$notificationType}> does not exist"];
+            $errors[] = ['code' => "404", 'message' => "type with id <{$notificationType}> does not exist"];
         if($content === null)
-            $errors[] = ['code' => 1, 'message' => "content cannot be null"];
+            $errors[] = ['code' => "400", 'message' => "content cannot be null"];
         if(Notification::find($id) === null)
-            $errors[] = ['code' => 404, 'message' => "notification with id {$id} does not exist"];
+            $errors[] = ['code' => "404", 'message' => "notification with id {$id} does not exist"];
 
         if(!empty($errors))
             return response()->json(['data' => null, 'errors' => $errors]);
@@ -84,11 +84,11 @@ class NotificationsController
         $notification = Notification::find($id);
 
         if($notificationType !== null and !is_numeric($notificationType))
-            $errors[] = ['code' => 1, 'message' => "type cannot be empty"];
+            $errors[] = ['code' => "400", 'message' => "type cannot be empty"];
         if($notificationType !== null and NotificationType::find($notificationType) === null)
-            $errors[] = ['code' => 1, 'message' => "type with id <{$notificationType}> does not exist"];
+            $errors[] = ['code' => "404", 'message' => "type with id <{$notificationType}> does not exist"];
         if(Notification::find($id) === null)
-            $errors[] = ['code' => 404, 'message' => "notification with id {$id} does not exist"];
+            $errors[] = ['code' => "404", 'message' => "notification with id {$id} does not exist"];
 
         if(!empty($errors))
             return response()->json(['data' => null, 'errors' => $errors]);
@@ -108,10 +108,10 @@ class NotificationsController
         $errors = [];
 
         if($notification === null)
-            $errors[] = ['code' => 404, 'message' => "notification with id {$id} does not exist"];
+            $errors[] = ['code' => "404", 'message' => "notification with id {$id} does not exist"];
 
         if(!empty($errors))
-            return response()->json(['data' => null, 'errors' => $errors]);
+            return response()->json(['data' => null, 'errors' => $errors])->setStatusCode(404);
 
         $include = $request->input('include');
         if($include === 'type') {
@@ -124,7 +124,7 @@ class NotificationsController
     public function delete(Request $request) {
         $id = $request->route('id');
 
-        $notification = Notification::find($id)->delete();
+        Notification::find($id)->delete();
 
         return response()->json(['data' => null]);
     }

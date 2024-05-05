@@ -18,7 +18,7 @@ paths:
       tags:
         - notifications
       operationId: getNotification
-      x-lg-handler: 'App\Http\ApiV1\Modules\Foos\Controllers\NotificationsController@get'
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\NotificationsController@get'
       x-lg-route-name: 'getNotification'
       x-lg-skip-request-generation: true
       summary: Получение объекта типа Notification
@@ -26,6 +26,34 @@ paths:
       parameters:
         - $ref: '#/components/parameters/PathId'
         - $ref: '#/components/parameters/QueryInclude'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/NotificationResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
+  /notifications:
+    post:
+      tags:
+        - notifications
+      operationId: createNotification
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\NotificationsController@add'
+      x-lg-route-name: 'createNotification'
+      x-lg-skip-request-generation: true
+      summary: Создание объекта типа Notification
+      description: Создание объекта типа Notification
+      requestBody:
+        description: createNotificationRequest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationPostBody'
       responses:
         "200":
           description: Успешный ответ
@@ -56,6 +84,8 @@ components:
           - data
     PaginationTypeEnum:
       $ref: './common_schemas.yaml#/PaginationTypeEnum'
+    NotificationPostBody:
+      $ref: './common_schemas.yaml#/NotificationPostBody'
   responses:
     BadRequest:
       description: Bad Request
