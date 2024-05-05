@@ -160,13 +160,10 @@ NotificationPostBody:
   properties:
     send_time:
       type: string
-      example: null
+      example: "2024-04-12T17:02:11.000000Z"
     content:
       type: string
     user_id:
       type: integer
     type_id:
       type: integer
-  required:
-    - type_id
-    - content

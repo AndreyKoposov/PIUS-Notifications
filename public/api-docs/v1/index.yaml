@@ -37,6 +37,86 @@ paths:
           $ref: '#/components/responses/NotFound'
         "500":
           $ref: '#/components/responses/ServerError'
+    put:
+      tags:
+        - notifications
+      operationId: putNotification
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\NotificationsController@replace'
+      x-lg-route-name: 'putNotification'
+      x-lg-skip-request-generation: true
+      summary: Обновление объекта типа Notification
+      description: Обновление объекта типа Notification
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      requestBody:
+        description: replaceNotificationRequest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationPostBody'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/NotificationResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags:
+        - notifications
+      operationId: patchNotification
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\NotificationsController@patch'
+      x-lg-route-name: 'patchNotification'
+      x-lg-skip-request-generation: true
+      summary: Обновление полей объекта типа Notification
+      description: Обновление полей объекта типа Notification
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      requestBody:
+        description: replaceNotificationRequest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationPostBody'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/NotificationResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - notifications
+      operationId: deleteNotification
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\NotificationsController@delete'
+      x-lg-route-name: 'deleteNotification'
+      x-lg-skip-request-generation: true
+      summary: Удаление объекта типа Notification
+      description: Удаление полей объекта типа Notification
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/DeleteResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
   /notifications:
     post:
       tags:

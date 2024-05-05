@@ -36,3 +36,20 @@ NotificationResponse:
   required:
     - data
     - errors
+
+DeleteResponse:
+  type: object
+  properties:
+    data:
+      description: Возвращаемый объект
+      example: null
+    errors:
+      $ref: './errors.yaml#/Error'
+      description: ошибки
+    meta:
+      x-skip-response-validation: true
+      type: object
+      description: Объект с мета-информацией
+  required:
+    - data
+    - errors
