@@ -16,6 +16,7 @@ Route::group(['prefix' => 'notifications'], function () {
     Route::post('/', [NotificationsController::class, 'add']);
     Route::delete('/{id}', [NotificationsController::class, 'delete']);
     Route::put('/{id}', [NotificationsController::class, 'replace']);
+    Route::patch('/{id}', [NotificationsController::class, 'patch']);
 
     Route::get('/send/{id}', [NotificationsController::class, 'send']);
 });
