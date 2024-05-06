@@ -173,7 +173,7 @@ paths:
       tags:
         - types
       operationId: deleteNotificationType
-      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\NotificationsTypeController@delete'
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\TypesController@delete'
       x-lg-route-name: 'deleteNotificationType'
       x-lg-skip-request-generation: true
       summary: Удаление объекта типа NotificationType
@@ -191,12 +191,70 @@ paths:
           $ref: '#/components/responses/NotFound'
         "500":
           $ref: '#/components/responses/ServerError'
+    put:
+      tags:
+        - types
+      operationId: putNotificationType
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\TypesController@replace'
+      x-lg-route-name: 'putNotificationType'
+      x-lg-skip-request-generation: true
+      summary: Обновление объекта типа NotificationType
+      description: Обновление объекта типа NotificationType
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      requestBody:
+        description: replaceNotificationTypeRequest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationTypePostBody'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/NotificationResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags:
+        - types
+      operationId: patchNotificationType
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\TypesController@update'
+      x-lg-route-name: 'patchNotificationType'
+      x-lg-skip-request-generation: true
+      summary: Обновление полей объекта типа NotificationType
+      description: Обновление полей объекта типа NotificationType
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      requestBody:
+        description: replaceNotificationTypeRequest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationTypePostBody'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/NotificationResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
   /types:
     post:
       tags:
         - types
       operationId: createNotificationType
-      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\NotificationsTypeController@add'
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\TypesController@add'
       x-lg-route-name: 'createNotificationType'
       x-lg-skip-request-generation: true
       summary: Создание объекта типа NotificationType

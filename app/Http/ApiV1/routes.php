@@ -25,6 +25,8 @@ Route::group(['prefix' => 'types'], function () {
     Route::get('/{id}', [TypesController::class, 'get']);
     Route::post('/', [TypesController::class, 'add']);
     Route::delete('/{id}', [TypesController::class, 'delete']);
+    Route::put('/{id}', [TypesController::class, 'replace']);
+    Route::patch('/{id}', [TypesController::class, 'update']);
 });
 
 Route::group(['prefix' => 'subscribes'], function () {
