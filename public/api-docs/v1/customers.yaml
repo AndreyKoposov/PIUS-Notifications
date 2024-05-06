@@ -46,8 +46,10 @@ DeleteResponse:
       description: Возвращаемый объект
       example: null
     errors:
-      $ref: './errors.yaml#/Error'
-      description: ошибки
+      type: array
+      description: Массив ошибок
+      items:
+        $ref: './errors.yaml#/Error'
     meta:
       x-skip-response-validation: true
       type: object

@@ -129,7 +129,6 @@ class NotificationsController
             $notification->type;
         }
 
-        $errors[] = ['code' => "200", 'message' => "ok"];
         return response()->json(['data' => $notification, 'errors' => $errors]);
     }
 

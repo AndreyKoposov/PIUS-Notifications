@@ -11,4 +11,8 @@ class NotificationType extends Model
 
     protected $guarded = [];
     protected $table = 'notification_types';
+
+    public function notifications() {
+        return $this->hasMany(Notification::class, 'id', 'notification_type_id');
+    }
 }
