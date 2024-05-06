@@ -20,6 +20,8 @@ class NotificationsController
     public function add(Request $request) {
         $content = $request->request->get('content');
         $notificationType = $request->request->get('type_id');
+        $sendTime = $request->request->get('send_time');
+        $userId = $request->request->get('user_id');
         $errors = [];
 
         if($notificationType === null or !is_numeric($notificationType))
@@ -33,12 +35,17 @@ class NotificationsController
         if(!empty($errors))
             return response()->json(['data' => null, 'errors' => $errors]);
 
+        if($sendTime === null) $sendTime = '2024-04-12T17:02:11';
+        if($userId === null)   $userId = 0;
+
         $notification = Notification::create([
             'content' => $content,
-            'notification_type_id' => $notificationType
+            'notification_type_id' => $notificationType,
+            'send_time' => $sendTime,
+            'user_id' => $userId
         ]);
 
-        return response()->json(['data' => $notification]);
+        return response()->json(['data' => $notification, 'errors' => $errors]);
     }
 
     public function replace(Request $request) {
@@ -64,13 +71,17 @@ class NotificationsController
         if(!empty($errors))
             return response()->json(['data' => null, 'errors' => $errors]);
 
+
+        if($sendTime === null) $sendTime = '2024-04-12T17:02:11';
+        if($userId === null)   $userId = 0;
+        
         $notification->content = $content;
         $notification->notification_type_id = $notificationType;
         $notification->user_id = $userId;
         $notification->send_time = $sendTime;
         $notification->save();
 
-        return response()->json(['data' => $notification]);
+        return response()->json(['data' => $notification, 'errors' => $errors]);
     }
 
     public function patch(Request $request) {
@@ -99,7 +110,7 @@ class NotificationsController
         if($sendTime !== null) $notification->send_time = $sendTime;
         $notification->save();
 
-        return response()->json(['data' => $notification]);
+        return response()->json(['data' => $notification, 'errors' => $errors]);
     }
 
     public function get(Request $request) {
@@ -118,14 +129,16 @@ class NotificationsController
             $notification->type;
         }
 
-        return response()->json(['data' => $notification]);
+        $errors[] = ['code' => "200", 'message' => "ok"];
+        return response()->json(['data' => $notification, 'errors' => $errors]);
     }
 
     public function delete(Request $request) {
         $id = $request->route('id');
+        $errors = [];
 
         Notification::find($id)->delete();
 
-        return response()->json(['data' => null]);
+        return response()->json(['data' => null, 'errors' => $errors]);
     }
 }
