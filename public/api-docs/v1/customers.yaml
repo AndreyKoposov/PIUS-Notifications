@@ -39,6 +39,38 @@ NotificationResponse:
     - data
     - errors
 
+NotificationTypeResponse:
+  type: object
+  properties:
+    data:
+      description: Возвращаемый объект
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID объекта
+        created_at:
+          type: string
+          description: время создания
+        updated_at:
+          type: string
+          description: время последнего изменения
+        course_id:
+          type: integer
+          description: ID привязанного курса
+    errors:
+      type: array
+      description: Массив ошибок
+      items:
+        $ref: './errors.yaml#/Error'
+    meta:
+      x-skip-response-validation: true
+      type: object
+      description: Объект с мета-информацией
+  required:
+    - data
+    - errors
+
 DeleteResponse:
   type: object
   properties:

@@ -167,3 +167,11 @@ NotificationPostBody:
       type: integer
     type_id:
       type: integer
+
+NotificationTypePostBody:
+  type: object
+  properties:
+    course_id:
+      type: integer
+      required: true
+    

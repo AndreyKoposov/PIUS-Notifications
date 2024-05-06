@@ -11,27 +11,53 @@ class TypesController
 {
     public function add(Request $request) {
         $courseId = $request->request->get('course_id');
+        $errors = [];
+
+        if($courseId === null || !is_numeric($courseId))
+            $errors[] = ['code' => "400", 'message' => "course ID cannot be null or empty"];
+
+        if(!empty($errors))
+            return response()->json(['data' => null, 'errors' => $errors])->setStatusCode(400);
 
         $type = NotificationType::create([
             'course_id' => $courseId
         ]);
 
-        return response()->json(['id' => $type->id]);
+        return response()->json(['id' => $type, 'errors' => $errors]);
     }
 
     public function get(Request $request) {
         $id = $request->route('id');
-
         $type = NotificationType::find($id);
+        $errors = [];
 
-        return response()->json(['data' => $type]);
+        if($type === null)
+            $errors[] = ['code' => "404", 'message' => "type with ID <{$id}> does not exist"];
+
+        if(!empty($errors))
+            return response()->json(['data' => null, 'errors' => $errors])->setStatusCode(404);
+
+        $include = $request->input('include');
+        if($include === 'notifications') {
+            $type->notifications;
+        }
+
+        return response()->json(['data' => $type, 'errors' => $errors]);
     }
 
     public function delete(Request $request) {
         $id = $request->route('id');
+        $type = NotificationType::find($id);
+        $errors = [];
 
-        NotificationType::find($id)->delete();
+        if($type === null)
+            $errors[] = ['code' => "404", 'message' => "type with ID <{$id}> does not exist"];
 
-        return response()->json(['data' => 'success']);
+        if(!empty($errors))
+            return response()->json(['data' => null, 'errors' => $errors])->setStatusCode(404);
+
+        $type->delete();
+
+        return response()->json(['data' => null, 'errors' => $errors]);
     }
 }

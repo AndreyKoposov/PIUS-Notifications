@@ -13,6 +13,6 @@ class NotificationType extends Model
     protected $table = 'notification_types';
 
     public function notifications() {
-        return $this->hasMany(Notification::class, 'id', 'notification_type_id');
+        return $this->hasMany(Notification::class, 'notification_type_id', 'id');
     }
 }

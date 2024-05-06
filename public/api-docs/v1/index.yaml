@@ -145,6 +145,80 @@ paths:
           $ref: '#/components/responses/NotFound'
         "500":
           $ref: '#/components/responses/ServerError'
+  /types/{id}:
+    get:
+      tags:
+        - types
+      operationId: getType
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\TypesController@get'
+      x-lg-route-name: 'getType'
+      x-lg-skip-request-generation: true
+      summary: Получение объекта типа NotificationType
+      description: Получение объекта типа NotificationType
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+        - $ref: '#/components/parameters/QueryInclude'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/NotificationTypeResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - types
+      operationId: deleteNotificationType
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\NotificationsTypeController@delete'
+      x-lg-route-name: 'deleteNotificationType'
+      x-lg-skip-request-generation: true
+      summary: Удаление объекта типа NotificationType
+      description: Удаление полей объекта типа NotificationType
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/DeleteResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
+  /types:
+    post:
+      tags:
+        - types
+      operationId: createNotificationType
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\NotificationsTypeController@add'
+      x-lg-route-name: 'createNotificationType'
+      x-lg-skip-request-generation: true
+      summary: Создание объекта типа NotificationType
+      description: Создание объекта типа NotificationType
+      requestBody:
+        description: createNotificationTypeRequest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationTypePostBody'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/NotificationTypeResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
 components:
   parameters:
     QueryInclude:
@@ -166,6 +240,8 @@ components:
       $ref: './common_schemas.yaml#/PaginationTypeEnum'
     NotificationPostBody:
       $ref: './common_schemas.yaml#/NotificationPostBody'
+    NotificationTypePostBody:
+      $ref: './common_schemas.yaml#/NotificationTypePostBody'
   responses:
     BadRequest:
       description: Bad Request
