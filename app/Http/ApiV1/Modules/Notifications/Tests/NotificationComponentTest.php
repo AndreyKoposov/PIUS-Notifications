@@ -48,7 +48,7 @@ test('GET /api/v1/notifications/{id} get notification success', function () {
     getJson("/api/v1/notifications/{$id}")
         ->assertStatus(200)
         ->assertJsonPath('data.content', $notification->content)
-        ->assertJsonPath('data.type_id', $notification->notification_type_id);
+        ->assertJsonPath('data.notification_type_id', $notification->notification_type_id);
 });
 
 ?>
