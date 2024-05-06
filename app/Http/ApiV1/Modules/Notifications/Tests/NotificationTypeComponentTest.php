@@ -22,15 +22,14 @@ test('POST /api/v1/types create success', function () {
 
     postJson('/api/v1/types', $request)
         ->assertStatus(200)
-        ->assertJsonPath('data.send_time', $request['course_id']);
+        ->assertJsonPath('data.course_id', $request['course_id']);
 
-    assertDatabaseHas(Notification::class, [
+    assertDatabaseHas(NotificationType::class, [
         'course_id' => $request['course_id']
     ]);
 });
 
 test('GET /api/v1/types/{id} get type success', function () {
-    /** @var Notification $notification */
     $type = new NotificationType();
     $type->course_id = 456;
     $type->save();
@@ -38,106 +37,59 @@ test('GET /api/v1/types/{id} get type success', function () {
 
     getJson("/api/v1/types/{$id}")
         ->assertStatus(200)
-        ->assertJsonPath('data.course_id', $notification->content);
+        ->assertJsonPath('data.course_id', $type->course_id);
 });
 
-test('PUT /api/v1/notifications/{id} put notification success', function () {
+test('PUT /api/v1/types/{id} put type success', function () {
     $type = new NotificationType();
     $type->course_id = 123;
     $type->save();
-    $type_id = $type->id;
-
-    $notification = new Notification();
-
-    $notification->content = 'test content';
-    $notification->notification_type_id = $type_id;
-    $notification->send_time = '2024-04-12T17:02:11';
-    $notification->user_id = 4444;
-
-    $notification->save();
-    $id = $notification->id;
+    $id = $type->id;
 
     $request = [
-        'send_time' => '2024-04-12T17:02:11',
-        'content' => 'new test content',
-        'type_id' => $type_id
+        'course_id' => 456
     ];
 
     
-    putJson("/api/v1/notifications/{$id}", $request)
+    putJson("/api/v1/types/{$id}", $request)
         ->assertStatus(200)
-        ->assertJsonPath('data.send_time', $request['send_time'])
-        ->assertJsonPath('data.content', $request['content'])
-        ->assertJsonPath('data.notification_type_id', $request['type_id'])
-        ->assertJsonPath('data.user_id', 0);
+        ->assertJsonPath('data.course_id', $request['course_id']);
 
-    assertDatabaseHas(Notification::class, [
-        'content' => $request['content'],
-        'notification_type_id' => $request['type_id'],
-        'user_id' => 0,
-        'send_time' => $request['send_time'],
+    assertDatabaseHas(NotificationType::class, [
+        'course_id' => $request['course_id']
     ]);
 });
 
-test('PATCH /api/v1/notifications/{id} patch notification success', function () {
+test('PATCH /api/v1/types/{id} patch type success', function () {
     $type = new NotificationType();
     $type->course_id = 123;
     $type->save();
-    $type_id = $type->id;
-
-    $notification = new Notification();
-
-    $notification->content = 'test content';
-    $notification->notification_type_id = $type_id;
-    $notification->send_time = '2024-04-12T17:02:11';
-    $notification->user_id = 4444;
-
-    $notification->save();
-    $id = $notification->id;
+    $id = $type->id;
 
     $request = [
-        'send_time' => '2024-04-12T17:02:11',
-        'content' => 'new test content',
-        'type_id' => $type_id
+        'course_id' => 456
     ];
-
     
-    patchJson("/api/v1/notifications/{$id}", $request)
+    patchJson("/api/v1/types/{$id}", $request)
         ->assertStatus(200)
-        ->assertJsonPath('data.send_time', $request['send_time'])
-        ->assertJsonPath('data.content', $request['content'])
-        ->assertJsonPath('data.notification_type_id', $request['type_id'])
-        ->assertJsonPath('data.user_id', 4444);
+        ->assertJsonPath('data.course_id', $request['course_id']);
 
-    assertDatabaseHas(Notification::class, [
-        'content' => $request['content'],
-        'notification_type_id' => $request['type_id'],
-        'user_id' => 4444,
-        'send_time' => $request['send_time'],
+    assertDatabaseHas(NotificationType::class, [
+        'course_id' => $request['course_id']
     ]);
 });
 
-test('DELETE /api/v1/notifications/{id} delete notification success', function () {
+test('DELETE /api/v1/types/{id} delete type success', function () {
     $type = new NotificationType();
     $type->course_id = 123;
     $type->save();
-    $type_id = $type->id;
-
-    $notification = new Notification();
-
-    $notification->content = 'test content';
-    $notification->notification_type_id = $type_id;
-    $notification->send_time = '2024-04-12T17:02:11';
-    $notification->user_id = 4444;
-
-    $notification->save();
-    $id = $notification->id;
+    $id = $type->id;
     
-    deleteJson("/api/v1/notifications/{$id}")
+    deleteJson("/api/v1/types/{$id}")
         ->assertStatus(200)
         ->assertJsonPath('data', null);
 
-    assertDatabaseMissing(Notification::class, [
+    assertDatabaseMissing(NotificationType::class, [
         'id' => $id
     ]);
 });

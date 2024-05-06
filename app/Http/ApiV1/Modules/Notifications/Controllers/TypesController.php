@@ -15,8 +15,6 @@ class TypesController
 
         if($courseId === null || !is_numeric($courseId))
             $errors[] = ['code' => "400", 'message' => "course ID cannot be null or empty"];
-        if($type === null)
-            $errors[] = ['code' => "404", 'message' => "type with ID <{$id}> does not exist"];
 
         if(!empty($errors))
             return response()->json(['data' => null, 'errors' => $errors])->setStatusCode(400);
@@ -25,7 +23,7 @@ class TypesController
             'course_id' => $courseId
         ]);
 
-        return response()->json(['id' => $type, 'errors' => $errors]);
+        return response()->json(['data' => $type, 'errors' => $errors]);
     }
 
     public function replace(Request $request) {
@@ -45,7 +43,7 @@ class TypesController
         $type->course_id = $courseId;
         $type->save();
 
-        return response()->json(['id' => $type, 'errors' => $errors]);
+        return response()->json(['data' => $type, 'errors' => $errors]);
     }
 
     public function update(Request $request) {
@@ -63,7 +61,7 @@ class TypesController
         $type->course_id = $courseId;
         $type->save();
 
-        return response()->json(['id' => $type, 'errors' => $errors]);
+        return response()->json(['data' => $type, 'errors' => $errors]);
     }
 
     public function get(Request $request) {

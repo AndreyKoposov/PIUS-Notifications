@@ -173,5 +173,5 @@ NotificationTypePostBody:
   properties:
     course_id:
       type: integer
-      required: true
-    
+  required:
+    - course_id

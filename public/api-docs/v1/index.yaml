@@ -12,6 +12,8 @@ servers:
 tags:
   - name: notifications
     description: tag-notifications
+  - name: types
+    description: tag-types
 paths:
   /notifications/{id}:
     get:
@@ -215,7 +217,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './customers.yaml#/NotificationResponse'
+                $ref: './customers.yaml#/NotificationTypeResponse'
         "404":
           $ref: '#/components/responses/NotFound'
         "500":
@@ -244,7 +246,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './customers.yaml#/NotificationResponse'
+                $ref: './customers.yaml#/NotificationTypeResponse'
         "404":
           $ref: '#/components/responses/NotFound'
         "500":
