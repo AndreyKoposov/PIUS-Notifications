@@ -1,0 +1,126 @@
+NotificationResponse:
+  type: object
+  properties:
+    data:
+      description: Возвращаемый объект
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID объекта
+        created_at:
+          type: string
+          description: время создания
+        updated_at:
+          type: string
+          description: время последнего изменения
+        notification_type_id:
+          type: integer
+          description: ID типа уведомления
+        content:
+          type: string
+          description: текст уведомления
+        send_time:
+          type: string
+          description: время отправки
+        user_id:
+          type: integer
+          description: ID пользователя
+    errors:
+      type: array
+      description: Массив ошибок
+      items:
+        $ref: './errors.yaml#/Error'
+    meta:
+      x-skip-response-validation: true
+      type: object
+      description: Объект с мета-информацией
+  required:
+    - data
+    - errors
+
+NotificationTypeResponse:
+  type: object
+  properties:
+    data:
+      description: Возвращаемый объект
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID объекта
+        created_at:
+          type: string
+          description: время создания
+        updated_at:
+          type: string
+          description: время последнего изменения
+        course_id:
+          type: integer
+          description: ID привязанного курса
+    errors:
+      type: array
+      description: Массив ошибок
+      items:
+        $ref: './errors.yaml#/Error'
+    meta:
+      x-skip-response-validation: true
+      type: object
+      description: Объект с мета-информацией
+  required:
+    - data
+    - errors
+
+SubscribeResponse:
+  type: object
+  properties:
+    data:
+      description: Возвращаемый объект
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID объекта
+        created_at:
+          type: string
+          description: время создания
+        updated_at:
+          type: string
+          description: время последнего изменения
+        user_id:
+          type: integer
+          description: ID подписанного пользователя
+        notification_type_id:
+          type: integer
+          description: ID типа подписки
+    errors:
+      type: array
+      description: Массив ошибок
+      items:
+        $ref: './errors.yaml#/Error'
+    meta:
+      x-skip-response-validation: true
+      type: object
+      description: Объект с мета-информацией
+  required:
+    - data
+    - errors
+
+DeleteResponse:
+  type: object
+  properties:
+    data:
+      description: Возвращаемый объект
+      example: null
+    errors:
+      type: array
+      description: Массив ошибок
+      items:
+        $ref: './errors.yaml#/Error'
+    meta:
+      x-skip-response-validation: true
+      type: object
+      description: Объект с мета-информацией
+  required:
+    - data
+    - errors

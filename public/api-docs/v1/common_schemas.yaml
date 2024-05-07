@@ -154,3 +154,43 @@ ResponseBodyOffsetPagination:
       allOf:
         - type: string
         - $ref: '#/PaginationTypeOffsetEnum'
+
+NotificationPostBody:
+  type: object
+  properties:
+    send_time:
+      type: string
+      example: "2024-04-12T17:02:11.000000Z"
+    content:
+      type: string
+    user_id:
+      type: integer
+    type_id:
+      type: integer
+
+NotificationTypePostBody:
+  type: object
+  properties:
+    course_id:
+      type: integer
+  required:
+    - course_id
+
+SubscribePostBody:
+  type: object
+  properties:
+    user_id:
+      type: integer
+    type_id:
+      type: integer
+  required:
+    - user_id
+    - type_id
+
+SubscribePatchBody:
+  type: object
+  properties:
+    user_id:
+      type: integer
+    type_id:
+      type: integer
