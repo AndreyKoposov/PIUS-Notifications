@@ -33,4 +33,6 @@ Route::group(['prefix' => 'subscribes'], function () {
     Route::get('/{id}', [SubscribesController::class, 'get']);
     Route::post('/', [SubscribesController::class, 'add']);
     Route::delete('/{id}', [SubscribesController::class, 'delete']);
+    Route::put('/{id}', [SubscribesController::class, 'replace']);
+    Route::patch('/{id}', [SubscribesController::class, 'update']);
 });

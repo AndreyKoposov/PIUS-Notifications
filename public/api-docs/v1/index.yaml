@@ -327,6 +327,64 @@ paths:
           $ref: '#/components/responses/NotFound'
         "500":
           $ref: '#/components/responses/ServerError'
+    put:
+      tags:
+        - subscribes
+      operationId: putSubscribe
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\SubscribesController@replace'
+      x-lg-route-name: 'putSubscribe'
+      x-lg-skip-request-generation: true
+      summary: Обновление объекта типа Subscribe
+      description: Обновление объекта типа Subscribe
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      requestBody:
+        description: replaceSubscribeRequest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribePostBody'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/SubscribeResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags:
+        - subscribes
+      operationId: patchSubscribe
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\SubscribesController@update'
+      x-lg-route-name: 'patchSubscribe'
+      x-lg-skip-request-generation: true
+      summary: Обновление полей объекта типа Subscribe
+      description: Обновление полей объекта типа Subscribe
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      requestBody:
+        description: replaceSubscribeRequest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribePostBody'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/SubscribeResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
   /subscribes:
     post:
       tags:

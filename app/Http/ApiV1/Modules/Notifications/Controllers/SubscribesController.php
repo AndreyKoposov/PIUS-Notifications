@@ -33,6 +33,51 @@ class SubscribesController
         return response()->json(['data' => $subscribe, 'errors' => $errors]);
     }
 
+    public function replace(Request $request) {
+        $id = $request->route('id');
+        $typeId = $request->request->get('type_id');
+        $userId = $request->request->get('user_id');
+        $errors = [];
+        $subscribe = Subscribe::find($id);
+
+        if($typeId === null || !is_numeric($typeId))
+            $errors[] = ['code' => "400", 'message' => "type ID cannot be null or empty"];
+        else
+        if(NotificationType::find($typeId) === null)
+            $errors[] = ['code' => "404", 'message' => "type with id {$typeId} does not exist"];
+        if($subscribe === null)
+            $errors[] = ['code' => "404", 'message' => "subscribe with id {$id} does not exist"];
+
+        if(!empty($errors))
+            return response()->json(['data' => null, 'errors' => $errors])->setStatusCode(400);
+        
+        $subscribe->notification_type_id = $typeId;
+        $subscribe->user_id = $userId;
+        $subscribe->save();
+
+        return response()->json(['data' => $subscribe, 'errors' => $errors]);
+    }
+
+    public function update(Request $request) {
+        $id = $request->route('id');
+        $typeId = $request->request->get('type_id');
+        $userId = $request->request->get('user_id');
+        $errors = [];
+        $subscribe = Subscribe::find($id);
+
+        if($subscribe === null)
+            $errors[] = ['code' => "404", 'message' => "subscribe with id {$id} does not exist"];
+
+        if(!empty($errors))
+            return response()->json(['data' => null, 'errors' => $errors])->setStatusCode(404);
+        
+        if($typeId !== null) $subscribe->notification_type_id = $typeId;
+        if($userId !== null) $subscribe->user_id = $userId;
+        $subscribe->save();
+
+        return response()->json(['data' => $subscribe, 'errors' => $errors]);
+    }
+
     public function get(Request $request) {
         $id = $request->route('id');
         $subscribe = Subscribe::find($id);
