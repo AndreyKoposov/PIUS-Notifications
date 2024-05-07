@@ -14,6 +14,8 @@ tags:
     description: tag-notifications
   - name: types
     description: tag-types
+  - name: subscribes
+    description: tag-subscribes
 paths:
   /notifications/{id}:
     get:
@@ -279,6 +281,80 @@ paths:
           $ref: '#/components/responses/NotFound'
         "500":
           $ref: '#/components/responses/ServerError'
+  /subscribes/{id}:
+    get:
+      tags:
+        - subscribes
+      operationId: getSubscribe
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\SubscribesController@get'
+      x-lg-route-name: 'getSubscribe'
+      x-lg-skip-request-generation: true
+      summary: Получение объекта типа Subscribe
+      description: Получение объекта типа Subscribe
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+        - $ref: '#/components/parameters/QueryInclude'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/SubscribeResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - subscribes
+      operationId: deleteSubscribes
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\SubscribesController@delete'
+      x-lg-route-name: 'deleteSubscribes'
+      x-lg-skip-request-generation: true
+      summary: Удаление объекта типа Subscribes
+      description: Удаление полей объекта типа Subscribes
+      parameters:
+        - $ref: '#/components/parameters/PathId'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/DeleteResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
+  /subscribes:
+    post:
+      tags:
+        - subscribes
+      operationId: createSubscribe
+      x-lg-handler: 'App\Http\ApiV1\Modules\Notifications\Controllers\SubscribesController@add'
+      x-lg-route-name: 'createSubscribe'
+      x-lg-skip-request-generation: true
+      summary: Создание объекта типа Subscribe
+      description: Создание объекта типа Subscribe
+      requestBody:
+        description: createSubscribeRequest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribePostBody'
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: './customers.yaml#/SubscribeResponse'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/ServerError'
 components:
   parameters:
     QueryInclude:
@@ -302,6 +378,8 @@ components:
       $ref: './common_schemas.yaml#/NotificationPostBody'
     NotificationTypePostBody:
       $ref: './common_schemas.yaml#/NotificationTypePostBody'
+    SubscribePostBody:
+      $ref: './common_schemas.yaml#/SubscribePostBody'
   responses:
     BadRequest:
       description: Bad Request

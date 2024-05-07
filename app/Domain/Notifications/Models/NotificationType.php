@@ -15,4 +15,8 @@ class NotificationType extends Model
     public function notifications() {
         return $this->hasMany(Notification::class, 'notification_type_id', 'id');
     }
+
+    public function subscribes() {
+        return $this->hasMany(Subscribe::class, 'notification_type_id', 'id');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\ApiV1\Modules\Notifications\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Domain\Notifications\Models\NotificationType;
+use App\Domain\Notifications\Models\Subscribe;
 
 
 class TypesController
@@ -75,9 +76,12 @@ class TypesController
         if(!empty($errors))
             return response()->json(['data' => null, 'errors' => $errors])->setStatusCode(404);
 
-        $include = $request->input('include');
-        if($include === 'notifications') {
+        $include = explode(',', $request->input('include'));
+        if(in_array('notifications', $include)) {
             $type->notifications;
+        }
+        if(in_array('subscribes', $include)) {
+            $type->subscribes;
         }
 
         return response()->json(['data' => $type, 'errors' => $errors]);
@@ -89,12 +93,7 @@ class TypesController
         $errors = [];
 
         if($type === null)
-            $errors[] = ['code' => "404", 'message' => "type with ID <{$id}> does not exist"];
-
-        if(!empty($errors))
-            return response()->json(['data' => null, 'errors' => $errors])->setStatusCode(404);
-
-        $type->delete();
+            $type->delete();
 
         return response()->json(['data' => null, 'errors' => $errors]);
     }

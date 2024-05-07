@@ -11,4 +11,8 @@ class Subscribe extends Model
 
     protected $table = 'subscribes';
     protected $guarded = [];
+
+    public function type() {
+        return $this->belongsTo(NotificationType::class, 'notification_type_id', 'id');
+    }
 }

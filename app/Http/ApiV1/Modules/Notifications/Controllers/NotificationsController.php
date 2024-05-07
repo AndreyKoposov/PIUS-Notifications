@@ -134,9 +134,11 @@ class NotificationsController
 
     public function delete(Request $request) {
         $id = $request->route('id');
+        $notification = Notification::find($id);
         $errors = [];
 
-        Notification::find($id)->delete();
+        if($notification === null)
+            $notification->delete();
 
         return response()->json(['data' => null, 'errors' => $errors]);
     }

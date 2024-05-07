@@ -175,3 +175,14 @@ NotificationTypePostBody:
       type: integer
   required:
     - course_id
+
+SubscribePostBody:
+  type: object
+  properties:
+    user_id:
+      type: integer
+    type_id:
+      type: integer
+  required:
+    - course_id
+    - type_id
