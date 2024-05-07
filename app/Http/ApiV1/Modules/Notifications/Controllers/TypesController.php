@@ -92,7 +92,7 @@ class TypesController
         $type = NotificationType::find($id);
         $errors = [];
 
-        if($type === null)
+        if($type !== null)
             $type->delete();
 
         return response()->json(['data' => null, 'errors' => $errors]);

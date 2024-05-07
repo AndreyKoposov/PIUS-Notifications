@@ -137,7 +137,7 @@ class NotificationsController
         $notification = Notification::find($id);
         $errors = [];
 
-        if($notification === null)
+        if($notification !== null)
             $notification->delete();
 
         return response()->json(['data' => null, 'errors' => $errors]);

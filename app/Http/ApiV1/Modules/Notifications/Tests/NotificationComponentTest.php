@@ -15,13 +15,16 @@ use function Pest\Laravel\deleteJson;
 uses(ApiV1ComponentTestCase::class);
 uses()->group('component');
 
-test('POST /api/v1/notifications create success', function () {
+beforeAll(function() {
 
+});
+
+test('POST /api/v1/notifications create success', function () {
     $type = new NotificationType();
     $type->course_id = 123;
     $type->save();
     $id = $type->id;
-
+    
     $request = [
         'send_time' => '2024-04-12T17:02:11',
         'content' => 'test content',
